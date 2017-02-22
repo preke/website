@@ -21,6 +21,21 @@ import os
 import codecs
 # Create your views here.
 
+
+def getSomePage(paginator, current_num):
+    num_list = list(paginator.page_range)
+    if current_num - 4 < 0:
+        if current_num + 4 < num_list[-1]:
+            return num_list[0:6]
+        else:
+            return num_list[0:]
+    else:
+        if current_num + 3 <= num_list[-1]:
+            return num_list[current_num - 3:current_num + 3]
+        else:
+            return num_list[num_list[-1] - 6:]
+
+
 def index(request):
         if not request.session.get('user_name', False):
             return HttpResponseRedirect(reverse('login'))
@@ -43,7 +58,8 @@ def index(request):
             page_client_list = paginator.page(1)
         except EmptyPage:
             page_client_list = paginator.page(paginator.num_pages)
-        info = {'paginator': paginator, 'page_client_list':page_client_list}
+        num_list = getSomePage(paginator, page_client_list)
+        info = {'paginator': paginator, 'page_client_list':page_client_list, 'num_list':num_list}
         return render(request, 'User/index.html', info)
     # except:
         # return HttpResponse('error')

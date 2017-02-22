@@ -18,6 +18,21 @@ def index(requset):
     return HttpResponse('Under Construction.....')
 
 
+
+def getSomePage(paginator, current_num):
+    num_list = list(paginator.page_range)
+    if current_num - 4 < 0:
+        if current_num + 4 < num_list[-1]:
+            return num_list[0:6]
+        else:
+            return num_list[0:]
+    else:
+        if current_num + 3 <= num_list[-1]:
+            return num_list[current_num - 3:current_num + 3]
+        else:
+            return num_list[num_list[-1] - 6:]
+
+
 def meeting_info(request):
     if not (request.session.get('user_name', False) and (request.session.get('RMM', False) or request.session.get('Boss', False))):
         return HttpResponseRedirect(reverse('login'))
@@ -38,7 +53,9 @@ def meeting_info(request):
             page_meeting_list = paginator.page(1)
         except EmptyPage:
             page_meeting_list = paginator.page(paginator.num_pages)
-        info = {'paginator': paginator, 'page_meeting_list':page_meeting_list}
+
+        num_list = getSomePage(paginator, page_meeting_list.number)
+        info = {'paginator': paginator, 'page_meeting_list':page_meeting_list, 'num_list': num_list, 'last_page_num':paginator.num_pages}
         return render(request, 'Meeting/meeting_info.html', info)
     except:
          return HttpResponse('error')
@@ -87,7 +104,7 @@ def lead_in_extends(request):
         record = reader.next()
         while True :
             record = [each.strip() for each in record]
-            record = [cell.decode('gb2312','ignore').encode('utf-8') for cell in record]
+            record = [cell.decode('gb2312','ignore') for cell in record]
             # 增加数字字段的容错性
             try:
                 record[8] = int(record[8])
@@ -127,9 +144,13 @@ def lead_in_extends(request):
                                                                 target_client = record[10],
                                                                 weight_of_chairman =int(record[15]),
                                                                 weight_of_speecher = int(record[24]),
-                                                                weight_of_participant = int(record[25]))
+                                                                weight_of_participant = int(record[25]),
+                                                                defaults = {
+                                                                    'is_checked': False,
+                                                                    'is_end_up': False,
+                                                                })
+           
             if not_exist :
-                meeting.rmm_of_meeting = request.session['user_name']
                 meeting.save()
 
             try:
