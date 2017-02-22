@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %} 客户信息导入 {% endblock %}
+
+{% block body %}
+
+<div class="container" style="height: 1500px; background-color: #F2F9FC; width: 1400px; ">
+    <br>
+    <h1 align="center" style="font-weight: 400">录入用户信息</h1>
+    <br>
+    <div class="container">
+        <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+    </div>
+    <br>
+    <br>
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8">
+
+        <form class="form" href="{% url 'client_lead_in' %}" method="post" >
+            {% csrf_token %}
+            <div class="row">
+                <label for="name" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">姓名 ：</p></label>
+                <div class="col-sm-9"><input class="form-control" type="text" id="name" placeholder="请输入姓名" name="name"></div>
+            </div>
+            <br>
+            <div class="row">
+                <label class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">性别 ：</p></label>
+                <div class="col-sm-9">
+                    <label for="male" style="font-weight: normal;" >男</label>
+                    <input type="radio" id="male" value="男" name="gender">
+                    <label for="female" style="font-weight: normal;">女</label>
+                    <input type="radio" id="female" value="女" name="gender">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="birth" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">出生年月 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="birth" name="birth" placeholder="请输入日期">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="post" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">职务 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="post" name="job" placeholder="请输入职务">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="office" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">科室 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="office" name="office" placeholder="请输入科室">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="major" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">专业 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="major" name="major" placeholder="请输入专业">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="nickname" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">职称 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="nickname" name="title" placeholder="请输入职称">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="unit" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">单位 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="text" id="unit" name="unit" placeholder="请输入单位">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="phone" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">手机 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="tel" id="phone" name="phone" placeholder="请输入手机号码">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="email" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">E-mail ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control" type="email" id="email" name="email" placeholder="请输入邮箱">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="job" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">学会任职 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="job" name="institute_job" placeholder="请输入学会任职">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="skill" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">特长 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="skill"  name="string_point" placeholder="请输入特长">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="jibie" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">讲者级别 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="jibie"  name="jibie" placeholder="请输入讲者级别">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="aim" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">参与活动目的 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="aim"  name="aim" placeholder="请输入参与活动目的">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="needs" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">参会需求 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="needs"  name="needs" placeholder="请输入参会需求">
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <label for="manager" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">负责大区经理 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="manager" name="region_manager" placeholder="请输入负责大区经理">
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <label for="d_manager" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">负责地区经理 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="d_manager" name="district_manager" placeholder="请输入负责地区经理">
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <label for="repre" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">负责代表 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="repre" name="repre" placeholder="请输入负责代表">
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <label for="type" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">类型 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="type" name="type" placeholder="请输入客户类型">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="weight" class="col-md-3 control-label" style="margin-top: 5px"><p align="right" style="font-size: 15px">客户潜力权重 ：</p></label>
+                <div class="col-sm-9">
+                    <input class="form-control"  id="weight" name="potential_weight" placeholder="请输入客户潜力权重">
+                </div>
+            </div>
+            <br>
+
+
+{#            <div class="row">#}
+{#                <label for="chairman">主席统计 ：</label>#}
+{#                <div class="col-sm-9">#}
+{#                    <input class="form-control"  id="chairman" name="chairman_times" placeholder="请输入主席统计">#}
+{#                </div>#}
+{#            </div>#}
+{#            <br>#}
+{#            <div class="row">#}
+{#                <label for="speaker">讲者统计 ：</label>#}
+{#                <div class="col-sm-9">#}
+{#                    <input class="form-control"  id="speaker" name="speecher_times" placeholder="请输入讲者统计">#}
+{#                </div>#}
+{#            </div>#}
+{#            <br>#}
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-2"><input class="form-control" type="submit" value="提交" style="font-weight: bold"> </div>
+            </div>
+        </form>
+        <br>
+        <br>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

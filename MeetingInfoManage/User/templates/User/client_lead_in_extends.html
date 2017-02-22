@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %} 客户信息导入 {% endblock %}
+
+{% block body %}
+
+        <br>
+        <h1 align="center" style="font-weight: 400">上传文件</h1>
+        <br>
+    <div class="container" align="center">
+
+                <div style="background-color: #F1F9EE; height: 300px; width: 800px; border-radius: 10px">
+                    <div class="col-md-3"></div>
+                    <form enctype="multipart/form-data" method="post">
+                        <div class="col-md-4" style="text-align: left">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <label class="control-label"><h4 >Select File</h4></label>
+                            <input  type="file" name="client_lead_in_extends">
+                        </div>
+                        <div class="col-md-4">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <button class="btn btn-default" style="margin-top: 20px"> 提交 </button>
+                        </div>
+                    </form>
+                </div>
+
+
+    </div>
+{% endblock %}

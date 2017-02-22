@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'jquery-2.2.0.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+</head>
+<body>
+    <div class="container" style="background-color: #F2F9FC">
+        <br>
+
+        <br>
+        <h1 align="center">{{ meeting.name_of_meeting }}</h1>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                时间: {{ meeting.year }}
+                /{{ meeting.month }}
+            </div>
+            <div class="col-md-4">
+                编号: {{ meeting.id }}
+            </div>
+            <div class="col-md-4">
+                产品: {{ meeting.product }}
+            </div>
+        </div>
+
+        <br>
+        <form class="form" method="post" action="{% url 'check' meeting.id %}">
+        {% csrf_token %}
+        <table class="table table-bordered table-striped">
+            <thead class="row" style="background-color: #BCC1C7">
+                <th class="col-md-2">姓名</th>
+                <th class="col-md-1">性别</th>
+                <th class="col-md-1">职务</th>
+                <th class="col-md-1">科室</th>
+                <th class="col-md-1">大区经理</th>
+                <th class="col-md-2">参会需求</th>
+            </thead>
+            <tbody>
+
+                {% for client in client_list %}
+                <tr>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.sex }}</td>
+                    <td>{{ client.job }}</td>
+                    <td>{{ client.office }}</td>
+                    <td>{{ client.region_manager.user_name }}</td>
+                    <td>{{ client.demand }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+        <div class="row">
+            <input type="submit" value="提交" class="form-control col-md-2 col-md-offset-5" style="width: 100px">
+        </div>
+        </form>
+
+    <br>
+    <br>
+    <br>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <script src="{% static 'jquery-2.2.0.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.js' %}"></script>
+
+        <title> {% block title %} title {% endblock %} </title>
+        {% block css %} {% endblock %}
+        {% block js %} {% endblock %}
+        <style>
+
+        </style>
+    </head>
+
+    <body style="">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="height: 30px">
+            <div class="container">
+                <div class="col-md-9">
+                <div class="row">
+                    {% if request.session.RSM or request.session.Boss %}
+                        <div class="col-md-2" style="margin-top: 8px" >
+                            <h4>
+                                <a href="{% url 'index' %}" style="text-decoration:none;" class="navbar-link">用户信息</a>
+                            </h4>
+                        </div>
+                    {% endif %}
+                    {% if request.session.RMM  or request.session.Boss %}
+                        <div class="col-md-2" style="margin-top: 8px">
+                            <h4>
+                                <a href="{% url 'meeting_info' %}" style="text-decoration:none;" class="navbar-link">会议信息</a>
+                            </h4>
+                        </div>
+                    {% endif %}
+                    {% if request.session.RMM %}
+                        <div class="col-md-2" style="margin-top: 8px" >
+                            <h4>
+                                <a href="{% url 'meeting_lead_in' %}" style="text-decoration:none;" class="navbar-link">会议录入</a>
+                            </h4>
+                        </div>
+                    {% endif %}
+                    {% if request.session.RSM %}
+                        <div class="col-md-2" style="margin-top: 8px">
+                            <h4>
+                                <a href="{% url 'client_lead_in' %}" style="text-decoration:none;" class="navbar-link">用户录入</a>
+                            </h4>
+                        </div>
+                    {% endif %}
+                    {% if request.session.RSM %}
+                        <div class="col-md-2" style="margin-top: 8px">
+                            <h4>
+                                <a href="{% url 'client_manage' %}" style="text-decoration:none;" class="navbar-link">分配会议</a>
+                            </h4>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+                <div class="col-md-3" style="">
+                <div style="float: left; margin-top: 8px">
+                    <h4>{{request.session.user_name}}</h4>
+                </div>
+                <div style="float: left; margin-top: 10px; margin-left: 10px">
+                    <form action="{% url 'logout' %}">
+                        <button class="btn btn-default"> 登出 </button>
+                    </form>
+                </div>
+                <div style="float: left; margin-top: 10px; margin-left: 10px">
+                    <form action="{% url 'change_password' %}" method="get">
+                        <button class="btn btn-default" > 修改密码 </button>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </nav>
+        <br>
+        <br>
+        {% block body %} body {% endblock %}
+    </body>
+</html>

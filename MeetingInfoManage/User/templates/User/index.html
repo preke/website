@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+
+{% block title %} 首页 {% endblock %}
+
+{% block body %}
+    <div style="height: 800px; width: 3000px;" class="container" >
+        <br>
+        <br>
+
+        <div style="">
+            <div style="float: left; margin-left: 20px; ">
+                <h4>
+                    操作:
+                </h4>
+            </div>
+            <div style="float: left; margin-left: 20px; ">
+                    <h4>
+                       <a href="{% url 'rsm' %}" style="text-decoration:none;">RSM 统计</a>
+                    </h4>
+            </div>
+            <div style="float: left; margin-left: 20px">
+                <h4 style="font-weight: 400">|</h4>
+            </div>
+            <div style="float: left; margin-left: 20px">
+                    <h4>
+                       <a href="{% url 'stat' %}" style="text-decoration:none;">用户参会需求统计</a>
+                    </h4>
+            </div>
+            <div style="float: left; margin-left: 20px">
+                <h4 style="font-weight: 400">|</h4>
+            </div>
+            {% if request.session.RSM %}
+            <div style="float: left; margin-left: 20px">
+                            <h4>
+                                <a href="{% url 'client_lead_in_extends' %}" style="text-decoration:none;">客户信息导入</a>
+                            </h4>
+            </div>
+            <div style="float: left; margin-left: 20px">
+                <h4 style="font-weight: 400">|</h4>
+            </div>
+            {% endif %}
+            <div style="float: left; margin-left: 20px">
+                 <h4>
+                     {% load staticfiles %}
+                     <a href="{% url 'client_lead_out' %}" style="text-decoration:none;">客户信息导出</a>
+                 </h4>
+            </div>
+            <br>
+        </div>
+
+        <br>
+        <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+        <table class="table table-bordered table-hover">
+            <thead style="background-color: #EDF2F1">
+                <th>姓名</th>
+                <th>性别</th>
+                <th>出生年月</th>
+                <th>职务</th>
+                <th>科室</th>
+                <th>专业</th>
+                <th>职称</th>
+                <th>单位</th>
+                <th>手机</th>
+                <th>E-mail</th>
+                <th>学会任职</th>
+                <th>特长</th>
+                <th>讲者级别</th>
+                <th>参与活动目的</th>
+                <th>参会需求</th>
+                <th>负责大区经理</th>
+                <th>负责地区经理</th>
+                <th>负责代表</th>
+                <th>类型</th>
+                <th>客户潜力权重</th>
+                <th>主席统计</th>
+                <th>计划主席次数</th>
+                <th>讲者统计</th>
+                <th>计划讲者统计</th>
+                {% if request.session.RSM %}
+                    <th>修改</th>
+                    <th>删除</th>
+                {% endif %}
+            </thead>
+            <tbody>
+                {% for client in page_client_list.object_list %}
+                <tr>
+                    <td>{{client.name}}</td>
+                    <td>{{client.sex}}</td>
+                    <td>{{client.birth}}</td>
+                    <td>{{client.job}}</td>
+                    <td>{{client.office}}</td>
+                    <td>{{client.major}}</td>
+                    <td>{{client.title}}</td>
+                    <td>{{client.unit}}</td>
+                    <td>{{client.phone}}</td>
+                    <td>{{client.email}}</td>
+                    <td>{{client.institute_job}}</td>
+                    <td>{{client.strong_point}}</td>
+                    <td>{{client.speaker_rate }}</td>
+                    <td>{{client.purpose }}</td>
+                    <td>{{client.demand }}</td>
+                    <td>{{client.region_manager }}</td>
+                    <td>{{client.district_manager}}</td>
+                    <td>{{client.represent}}</td>
+                    <td>{{client.type}}</td>
+                    <td>{{client.potential_weight}}</td>
+                    <td>{{client.chairman_times}}</td>
+                    <td>{{client.chairman_times_plan}}</td>
+                    <td>{{client.speecher_times}}</td>
+                    <td>{{client.speecher_times_plan}}</td>
+                    {% if request.session.RSM %}
+                        <td><a href="{% url 'change_info' client.id %}">修改</a></td>
+                        <td><a href="{% url 'delete' client.id %}">删除</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div style="margin-left: 20px">
+                        <font style="font-size: 20px; vertical-align: bottom; font-weight: 200">
+                            当前页:&nbsp;&nbsp;&nbsp;&nbsp;{{page_client_list.number}}
+                        </font>
+                        <button style="margin-left: 20px" class="btn btn-default">
+                            <a href="?page=1" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 首页 </a>
+                        </button>
+                        {% if page_client_list.has_previous %}
+                            <button style="" class="btn btn-default">
+                                <a href="?page={{page_client_list.prevoius_page_number}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 上一页 </a>
+                            </button>
+                        {% endif %}
+                        {% if page_client_list.has_next %}
+                            <button style="" class="btn btn-default">
+                                <a href="?page={{page_client_list.next_page_number}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 下一页 </a>
+                            </button>
+                        {% endif %}
+                        <button style="" class="btn btn-default">
+                            <a href="?page={{paginator.num_pages}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 末页 </a>
+                        </button>
+        </div>
+        <br>
+
+
+    </div>
+    <br>
+    <br>
+    <br>
+{% endblock %}

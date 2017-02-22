@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <h1 align="center" style="font-weight: 400">RSM用户统计</h1>
+        <br>
+
+        <table class="table table-bordered table-hover">
+          <thead style="background-color: #F2F9FC">
+            <th>RSM</th>
+            <th>临床</th>
+            <th>院长</th>
+            <th>总计</th>
+          </thead>
+          <tbody>
+            {% for rsm in table %}
+                <tr>
+                    <td>{{ rsm.name }}</td>
+                    <td>{{ rsm.linChuang }}</td>
+                    <td>{{ rsm.yuanZhang }}</td>
+                    <td>{{ rsm.all_member }}</td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td>总计</td>
+                    <td>{{ l_all }}</td>
+                    <td>{{ y_all }}</td>
+                    <td>{{ all }}</td>
+                </tr>
+          </tbody>
+        </table>
+    </div>
+
+{% endblock %}

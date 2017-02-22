@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+{% extends 'base.html' %}
+
+{% block title %} 会议信息 {% endblock title %}
+
+{% block body %}
+<div style="margin-left: 20px; width: 1800px">
+    <br>
+    <br>
+    <div class="row">
+         <div style="float: left; margin-left: 20px; ">
+                <h4>
+                    操作:
+                </h4>
+         </div>
+         <div style="float: left; margin-left: 20px; ">
+              <h4>
+                  <a href="{% url 'meeting_lead_in_extends' %}">会议信息excel导入</a>
+              </h4>
+         </div>
+         <div style="float: left; margin-left: 20px">
+             <h4 style="font-weight: 400">|</h4>
+         </div>
+         <div style="float: left; margin-left: 20px; ">
+              <h4>
+                  {% load staticfiles %}
+                  <a href="{% url 'meeting_lead_out' %}">会议信息导出</a>
+              </h4>
+         </div>
+    </div>
+    <br>
+    <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+    <table class="table table-bordered table-hover">
+        <thead style="background-color: #EDF2F1">
+            <th>产品</th>
+            <th>活动名称</th>
+            <th>AZ活动负责人</th>
+            <th>年</th>
+            <th>月</th>
+            <th>日</th>
+            <!-- <th>活动编号</th> -->
+            <!-- <th>活动主题</th> -->
+            <th>活动城市</th>
+            <th>会议类型</th>
+            <th>参会规模</th>
+            <th>AZ覆盖邀请人数</th>
+            <th>目标客户群</th>
+            <!-- <th></th> -->
+            <th>主席权重</th>
+            <th>讲者情况</th>
+            <th>参会权重</th>
+            <th>审核</th>
+            <th>参会统计</th>
+            <th>覆盖情况</th>
+            <th>编辑</th>
+            {% if request.session.RMM %}
+                <th>删除</th>
+            {% endif %}
+        </thead>
+        <tbody>
+            {% for meeting in page_meeting_list.object_list %}
+            <tr>
+                <td>{{meeting.product}}</td>
+                <td>{{meeting.name_of_meeting}}</td>
+                <td>{{meeting.rmm_of_meeting}}</td>
+                <td> {{meeting.year}}</td>
+                <td> {{meeting.month}}</td>
+                <td>{{meeting.number}}</td>
+                <td> {{meeting.city}}</td>
+                <td> {{meeting.type_of_meeting}}</td>
+                <td>{{meeting.number_of_participant}}</td>
+                <td>{{meeting.number_of_participant_invited}}</td>
+                <td>{{meeting.target_client}}</td>
+                <td>{{meeting.weight_of_chairman}}</td>
+                <td>{{meeting.weight_of_speecher}}</td>
+                <td>{{meeting.weight_of_participant}}</td>
+                <td>
+                    {% if meeting.is_checked %}
+                        <span>已审核</span>
+                    {% elif meeting.is_end_up %}
+                        <span>已审核</span>
+                    {% else %}
+                        {% if request.session.RMM %}
+                            <a href="{% url 'check' meeting.id %}">未审核</a>
+                        {% else %}
+                            <span>未审核</span>
+                        {% endif %}
+
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not meeting.is_end_up %}
+                        {% if request.session.RMM %}
+                            <a href="{% url 'static' meeting.id %}">统计</a>
+                        {% else %}
+                            <span>统计</span>
+                        {% endif %}
+
+                    {% else %}
+                        {{meeting.number_of_participant_invited}}
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'fugai' meeting.id %}">覆盖情况</a></td>
+                {% if meeting.is_checked or meeting.is_end_up %}
+                    <td>(已审核)不可编辑</td>
+                    <td><a href="{% url 'delete_meeting' meeting.id %}">删除</a></td>
+                {% else %}
+                    <td><a href="{% url 'edit' meeting.id %}">编辑</a></td>
+                    <td><a href="{% url 'delete_meeting' meeting.id %}">删除</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div>
+                        <font style="font-size: 20px; vertical-align: bottom; font-weight: 200">
+                            当前页:&nbsp;&nbsp;&nbsp;&nbsp;{{page_meeting_list.number}}
+                        </font>
+                        <button style="margin-left: 20px" class="btn btn-default">
+                            <a href="?page=1" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 首页 </a>
+                        </button>
+                        {% if page_meeting_list.has_previous %}
+                            <button style="" class="btn btn-default">
+                                <a href="?page={{page_meeting_list.prevoius_page_number}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 上一页 </a>
+                            </button>
+                        {% endif %}
+                        {% if page_meeting_list.has_next %}
+                            <button style="" class="btn btn-default">
+                                <a href="?page={{page_meeting_list.next_page_number}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 下一页 </a>
+                            </button>
+                        {% endif %}
+                        <button style="" class="btn btn-default">
+                            <a href="?page={{paginator.num_pages}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 末页 </a>
+                        </button>
+    </div>
+
+{#    <hr/>#}
+{#    <br>#}
+{#    <br>#}
+{#    <div class="container" align="center">#}
+{#        当前页:{{page_meeting_list.number}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#}
+{#        <a href="?page=1"> 首页 </a> &nbsp;&nbsp;#}
+{#        {% if page_meeting_list.has_previous %} <a href="?page={{page_meeting_list.prevoius_page_number}}" > 上一页 </a> &nbsp;&nbsp; {% endif %}#}
+{#        {% if page_meeting_list.has_next %} <a href="?page={{page_meeting_list.next_page_number}}" > 下一页 </a> &nbsp;&nbsp; {% endif %}#}
+{#        <a href="?page={{paginator.num_pages}}"> 末页 </a>#}
+{#    </div>#}
+
+    <br>
+    <br>
+    <br>
+</div>
+{% endblock body %}

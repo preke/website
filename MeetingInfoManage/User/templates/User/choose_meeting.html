@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %} 会议分配 {% endblock %}
+
+{% block body %}
+    <div class="container">
+        <br>
+        <h2 style="font-weight: 200">客户潜力权重: {{client.potential_weight}}</h2>
+        <br>
+        <h3 style="font-weight: 200">可分配的会议:</h3>
+                <table class="table table-bordered table-hover" style="width: 800px">
+                    <thead style="background-color: #F2F9FC;">
+{#                       <div class="row" style="width: 800px">#}
+                        <th col-sm-2>主题</th>
+                        <th col-sm-2>产品</th>
+                        <th col-sm-1>年</th>
+                        <th col-sm-1>月</th>
+                        <th col-sm-1>日</th>
+                        <th col-sm-1>参会需求</th>
+
+{#                       </div>#}
+                    </thead>
+                    <tbody>
+                        {% for meeting in meeting_list %}
+                            <tr>
+                                <td>{{meeting.name_of_meeting}}</td>
+                                <td>{{meeting.product}}</td>
+                                <td>{{meeting.year}}</td>
+                                <td>{{meeting.month}}</td>
+                                <td>{{meeting.day}}</td>
+                                <td>{{client.demand}}</td>
+                                <!-- <td>{{meeting.weight_of_}}</td> -->
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <br>
+                <h2>方案:</h2>
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    {% for way in all_ways %}
+                        <hr style="height:1px;border:none;border-top:1px solid #555555;" />
+                        <div class="row">
+                            <div class="col-md-9">
+                                <table class="table table-bordered table-hover">
+                            <thead style="background-color: #F2F9FC;">
+                                <th>主题</th>
+                                <th>产品</th>
+                                <th>年</th>
+                                <th>月</th>
+                                <th>日</th>
+                                <th>参会需求</th>
+                            </thead>
+                            <tbody>
+                                {% for meeting in way %}
+                                    <tr>
+                                        <td>{{meeting.name_of_meeting}}</td>
+                                        <td>{{meeting.product}}</td>
+                                        <td>{{meeting.year}}</td>
+                                        <td>{{meeting.month}}</td>
+                                        <td>{{meeting.day}}</td>
+                                        <td>{{client.demand}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-default" name="way_index" style="margin-top: 0px" value="{{forloop.counter0 }}"> 确定 </button>
+                            </div>
+                        </div>
+                {% endfor %}
+                </form>
+    </div>
+{% endblock %}
