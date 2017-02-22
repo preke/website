@@ -112,39 +112,30 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <div>
-                        <font style="font-size: 20px; vertical-align: bottom; font-weight: 200">
-                            当前页:&nbsp;&nbsp;&nbsp;&nbsp;{{page_meeting_list.number}}
-                        </font>
-                        <button style="margin-left: 20px" class="btn btn-default">
-                            <a href="?page=1" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 首页 </a>
-                        </button>
+    
+    <hr>
+    <div class='col-lg-offset-2 col-xs-offset-2 col-md-offset-2 col-sm-offset-2'>
+                    <ul class="pagination">
+                        <li><a href="?page={{ 1 }}">首页</a></li>
                         {% if page_meeting_list.has_previous %}
-                            <button style="" class="btn btn-default">
-                                <a href="?page={{page_meeting_list.prevoius_page_number}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 上一页 </a>
-                            </button>
+                            <li><a href="?page={{ page_meeting_list.previous_page_number }}">&laquo;</a></li>
                         {% endif %}
+                        {% for num in num_list %}
+                            {% ifequal num page_meeting_list.number %}
+                                <li class="active"><a href="?page={{ num }}">{{ num }}</a></li>
+                            {% else %}
+                                <li><a href="?page={{ num }}">{{ num }}</a></li>
+                            {% endifequal %}
+                        {% endfor %}
                         {% if page_meeting_list.has_next %}
-                            <button style="" class="btn btn-default">
-                                <a href="?page={{page_meeting_list.next_page_number}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 下一页 </a>
-                            </button>
+                            <li><a href="?page={{ page_meeting_list.next_page_number }}">&raquo;</a></li>
                         {% endif %}
-                        <button style="" class="btn btn-default">
-                            <a href="?page={{paginator.num_pages}}" style="text-decoration:none; color: #0f0f0f" class="btn-link"> 末页 </a>
-                        </button>
-    </div>
+                        <li><a href="?page={{ last_page_num }}">尾页</a></li>
+                    </ul>
+                        
 
-{#    <hr/>#}
-{#    <br>#}
-{#    <br>#}
-{#    <div class="container" align="center">#}
-{#        当前页:{{page_meeting_list.number}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#}
-{#        <a href="?page=1"> 首页 </a> &nbsp;&nbsp;#}
-{#        {% if page_meeting_list.has_previous %} <a href="?page={{page_meeting_list.prevoius_page_number}}" > 上一页 </a> &nbsp;&nbsp; {% endif %}#}
-{#        {% if page_meeting_list.has_next %} <a href="?page={{page_meeting_list.next_page_number}}" > 下一页 </a> &nbsp;&nbsp; {% endif %}#}
-{#        <a href="?page={{paginator.num_pages}}"> 末页 </a>#}
-{#    </div>#}
+
+    </div>
 
     <br>
     <br>
